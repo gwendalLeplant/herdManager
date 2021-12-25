@@ -9,32 +9,40 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.gleplant.herdManager.bo.Color;
+import org.gleplant.herdManager.bo.Race;
 import org.gleplant.herdManager.bo.Sheep;
 
 public class SheepDAOJDBCImpl {
 
 	public static LocalDateTime getFormattedBirthDate(String strToFormat) {
 		if (!strToFormat.equals("")) {
-			return LocalDateTime.parse(strToFormat,
-					DateTimeFormatter.ofPattern("MM/dd/yy HH:mm:ss"));
+			return LocalDateTime.parse(strToFormat, DateTimeFormatter.ofPattern("MM/dd/yy HH:mm:ss"));
 		} else {
 			return LocalDateTime.MIN;
 		}
 	}
-	
+
 	public static List<Sheep> selectAll() {
 		List<Sheep> results = new ArrayList<Sheep>();
 
 		try {
 			Connection conn = DatabaseConnection.getConnection();
-			PreparedStatement ps = conn.prepareStatement("SELECT * FROM sheep");
+			PreparedStatement ps = conn.prepareStatement(
+					"SELECT * FROM sheep as sh JOIN color c ON sh.color_id=c.color_id JOIN race r ON sh.race_id=r.race_id");
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				Sheep currentSheep = new Sheep(rs.getInt("color_id"), rs.getInt("race_id"), rs.getInt("gender"),
-						getFormattedBirthDate(rs.getString("birth_date")), rs.getString("comments"), rs.getString("nom"),
-						rs.getString("registration_number"), rs.getString("mother_registration_number"),
-						rs.getString("father_registration_number"), rs.getInt("photo_number"),
-						rs.getString("firstname"), rs.getInt("birth_year"), rs.getInt("sheep_id"));
+
+				Race currentRace = new Race(rs.getInt("race_id"), rs.getString("raceName"));
+
+				Color currentColor = new Color(rs.getInt("color_id"), rs.getString("colorName"));
+
+				Sheep currentSheep = new Sheep(currentColor, currentRace, rs.getInt("gender"),
+						getFormattedBirthDate(rs.getString("birth_date")), rs.getString("comments"),
+						rs.getString("nom"), rs.getString("registration_number"),
+						rs.getString("mother_registration_number"), rs.getString("father_registration_number"),
+						rs.getInt("photo_number"), rs.getString("firstname"), rs.getInt("birth_year"),
+						rs.getInt("sheep_id"));
 				results.add(currentSheep);
 			}
 			ps.close();
@@ -52,13 +60,18 @@ public class SheepDAOJDBCImpl {
 		try {
 			Connection conn = DatabaseConnection.getConnection();
 
-			PreparedStatement ps = conn.prepareStatement("SELECT * FROM sheep WHERE nom LIKE ?");
+			PreparedStatement ps = conn.prepareStatement(
+					"SELECT * FROM sheep as sh JOIN color c ON sh.color_id=c.color_id JOIN race r ON sh.race_id=r.race_id WHERE nom LIKE ?");
 			ps.setString(1, strToSearchFor + "%");
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				Sheep currentSheep = new Sheep(rs.getInt("color_id"), rs.getInt("race_id"), rs.getInt("gender"),
-						getFormattedBirthDate(rs.getString("birth_date")),
-						rs.getString("comments"), rs.getString("nom"), rs.getString("registration_number"),
+				Race currentRace = new Race(rs.getInt("race_id"), rs.getString("raceName"));
+
+				Color currentColor = new Color(rs.getInt("color_id"), rs.getString("colorName"));
+
+				Sheep currentSheep = new Sheep(currentColor, currentRace, rs.getInt("gender"),
+						getFormattedBirthDate(rs.getString("birth_date")), rs.getString("comments"),
+						rs.getString("nom"), rs.getString("registration_number"),
 						rs.getString("mother_registration_number"), rs.getString("father_registration_number"),
 						rs.getInt("photo_number"), rs.getString("firstname"), rs.getInt("birth_year"),
 						rs.getInt("sheep_id"));
@@ -80,14 +93,18 @@ public class SheepDAOJDBCImpl {
 		try {
 			Connection conn = DatabaseConnection.getConnection();
 
-			PreparedStatement ps = conn.prepareStatement("SELECT * FROM sheep WHERE sheep_id=?");
+			PreparedStatement ps = conn.prepareStatement(
+					"SELECT * FROM sheep as sh JOIN color c ON sh.color_id=c.color_id JOIN race r ON sh.race_id=r.race_id WHERE sheep_id=?");
 			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {
-				result = new Sheep(rs.getInt("color_id"), rs.getInt("race_id"), rs.getInt("gender"),
-						getFormattedBirthDate(rs.getString("birth_date")),
-						rs.getString("comments"), rs.getString("nom"), rs.getString("registration_number"),
+				Race currentRace = new Race(rs.getInt("race_id"), rs.getString("raceName"));
+
+				Color currentColor = new Color(rs.getInt("color_id"), rs.getString("colorName"));
+				result = new Sheep(currentColor, currentRace, rs.getInt("gender"),
+						getFormattedBirthDate(rs.getString("birth_date")), rs.getString("comments"),
+						rs.getString("nom"), rs.getString("registration_number"),
 						rs.getString("mother_registration_number"), rs.getString("father_registration_number"),
 						rs.getInt("photo_number"), rs.getString("firstname"), rs.getInt("birth_year"),
 						rs.getInt("sheep_id"));
@@ -112,8 +129,8 @@ public class SheepDAOJDBCImpl {
 					"INSERT INTO sheep (color_id, race_id, gender, birth_date, comments, nom, registration_number,mother_registration_number,"
 							+ "father_registration_number,photo_number,firstname,birth_year,sheep_id) VALUES (?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?)",
 					PreparedStatement.RETURN_GENERATED_KEYS);
-			ps.setInt(1, newSheep.getColorId());
-			ps.setInt(2, newSheep.getRaceId());
+			ps.setInt(1, newSheep.getColor().getColorId());
+			ps.setInt(2, newSheep.getRace().getRaceId());
 			ps.setInt(3, newSheep.getGender());
 			ps.setString(4, newSheep.getBirthDate().toString());
 			ps.setString(5, newSheep.getComments());
@@ -151,8 +168,8 @@ public class SheepDAOJDBCImpl {
 					.prepareStatement("UPDATE sheep SET color_id=?, race_id=?, gender=?, birth_date=?, comments=?,"
 							+ " nom=?, registration_number=?,mother_registration_number=?,father_registration_number,"
 							+ " photo_number=?, firstname=?, birth_year=?" + " WHERE sheep_id=?");
-			ps.setInt(1, updatedSheep.getColorId());
-			ps.setInt(2, updatedSheep.getRaceId());
+			ps.setInt(1, updatedSheep.getColor().getColorId());
+			ps.setInt(2, updatedSheep.getRace().getRaceId());
 			ps.setInt(3, updatedSheep.getGender());
 			ps.setString(4, updatedSheep.getBirthDate().toString());
 			ps.setString(5, updatedSheep.getComments());

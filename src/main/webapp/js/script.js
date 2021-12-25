@@ -14,6 +14,7 @@ async function getSheepsFromServer() {
 	for (let currentSheep of sheepList.Tab) {
 		tabSheep.push(currentSheep);
 	}
+	console.log(tabSheep);
 }
 function displaySheepList(list) {
 	// Clear div

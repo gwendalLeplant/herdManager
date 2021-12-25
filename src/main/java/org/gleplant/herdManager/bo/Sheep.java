@@ -6,8 +6,8 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 
 public class Sheep {
 
-	private Integer colorId;
-	private Integer raceId;
+	private Color color;
+	private Race race;
 	private Integer gender;
 	private LocalDateTime birthDate;
 	private String comments;
@@ -27,8 +27,8 @@ public class Sheep {
 	}
 
 	/**
-	 * @param colorId
-	 * @param raceId
+	 * @param color
+	 * @param race
 	 * @param gender
 	 * @param birthDate
 	 * @param comments
@@ -40,11 +40,11 @@ public class Sheep {
 	 * @param alias
 	 * @param birthYear
 	 */
-	public Sheep(Integer colorId, Integer raceId, Integer gender, LocalDateTime birthDate, String comments, String name,
+	public Sheep(Color color, Race race, Integer gender, LocalDateTime birthDate, String comments, String name,
 			String registationNumber, String motherRegistrationNumber, String fatherRegistrationNumber,
 			Integer photoNumber, String alias, Integer birthYear) {
-		this.colorId = colorId;
-		this.raceId = raceId;
+		this.color = color;
+		this.race = race;
 		this.gender = gender;
 		this.birthDate = birthDate;
 		this.comments = comments;
@@ -58,8 +58,8 @@ public class Sheep {
 	}
 
 	/**
-	 * @param colorId
-	 * @param raceId
+	 * @param color
+	 * @param race
 	 * @param gender
 	 * @param birthDate
 	 * @param comments
@@ -72,11 +72,11 @@ public class Sheep {
 	 * @param birthYear
 	 * @param sheepId
 	 */
-	public Sheep(Integer colorId, Integer raceId, Integer gender, LocalDateTime birthDate, String comments, String name,
+	public Sheep(Color color, Race race, Integer gender, LocalDateTime birthDate, String comments, String name,
 			String registationNumber, String motherRegistrationNumber, String fatherRegistrationNumber,
 			Integer photoNumber, String alias, Integer birthYear, Integer sheepId) {
-		this.colorId = colorId;
-		this.raceId = raceId;
+		this.color = color;
+		this.race = race;
 		this.gender = gender;
 		this.birthDate = birthDate;
 		this.comments = comments;
@@ -91,33 +91,33 @@ public class Sheep {
 	}
 
 	/**
-	 * @return the colorId
+	 * @return the color
 	 */
-	@JsonGetter("colorId")
-	public Integer getColorId() {
-		return colorId;
+	@JsonGetter("color")
+	public Color getColor() {
+		return color;
 	}
 
 	/**
-	 * @param colorId the colorId to set
+	 * @param color the color to set
 	 */
-	public void setColorId(Integer colorId) {
-		this.colorId = colorId;
+	public void setColor(Color color) {
+		this.color = color;
 	}
 
 	/**
-	 * @return the raceId
+	 * @return the race
 	 */
-	@JsonGetter("raceId")
-	public Integer getRaceId() {
-		return raceId;
+	@JsonGetter("race")
+	public Race getRace() {
+		return race;
 	}
 
 	/**
-	 * @param raceId the raceId to set
+	 * @param race the race to set
 	 */
-	public void setRaceId(Integer raceId) {
-		this.raceId = raceId;
+	public void setRace(Race race) {
+		this.race = race;
 	}
 
 	/**
@@ -287,7 +287,7 @@ public class Sheep {
 
 	@Override
 	public String toString() {
-		return "Sheep [colorId=" + colorId + ", raceId=" + raceId + ", gender=" + gender + ", birthDate=" + birthDate
+		return "Sheep [color=" + color + ", race=" + race + ", gender=" + gender + ", birthDate=" + birthDate
 				+ ", comments=" + comments + ", name=" + name + ", registationNumber=" + registationNumber
 				+ ", motherRegistrationNumber=" + motherRegistrationNumber + ", fatherRegistrationNumber="
 				+ fatherRegistrationNumber + ", photoNumber=" + photoNumber + ", alias=" + alias + ", birthYear="
