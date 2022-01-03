@@ -2,8 +2,17 @@ package org.gleplant.herdManager.bo;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import com.fasterxml.jackson.annotation.JsonGetter;
 
+@Entity
+@Table(name = "sheep")
 public class Sheep {
 
 	private Color color;
@@ -18,7 +27,15 @@ public class Sheep {
 	private Integer photoNumber;
 	private String alias;
 	private Integer birthYear;
+	@Id 
+	@Column(name="sheep_id") 
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer sheepId;
+	private LocalDateTime deathDate;
+	private Person breeder;
+	private Person owner;
+	private Genotype genotype;
+	
 
 	/**
 	 * 
@@ -88,6 +105,66 @@ public class Sheep {
 		this.alias = alias;
 		this.birthYear = birthYear;
 		this.sheepId = sheepId;
+	}
+
+	/**
+	 * @return the deathDate
+	 */
+	@JsonGetter("deathDate")
+	public LocalDateTime getDeathDate() {
+		return deathDate;
+	}
+
+	/**
+	 * @param deathDate the deathDate to set
+	 */
+	public void setDeathDate(LocalDateTime deathDate) {
+		this.deathDate = deathDate;
+	}
+
+	/**
+	 * @return the breeder
+	 */
+	@JsonGetter("breeder")
+	public Person getBreeder() {
+		return breeder;
+	}
+
+	/**
+	 * @param breeder the breeder to set
+	 */
+	public void setBreeder(Person breeder) {
+		this.breeder = breeder;
+	}
+
+	/**
+	 * @return the owner
+	 */
+	@JsonGetter("owner")
+	public Person getOwner() {
+		return owner;
+	}
+
+	/**
+	 * @param owner the owner to set
+	 */
+	public void setOwner(Person owner) {
+		this.owner = owner;
+	}
+
+	/**
+	 * @return the genotype
+	 */
+	@JsonGetter("genotype")
+	public Genotype getGenotype() {
+		return genotype;
+	}
+
+	/**
+	 * @param genotype the genotype to set
+	 */
+	public void setGenotype(Genotype genotype) {
+		this.genotype = genotype;
 	}
 
 	/**
@@ -291,7 +368,8 @@ public class Sheep {
 				+ ", comments=" + comments + ", name=" + name + ", registationNumber=" + registationNumber
 				+ ", motherRegistrationNumber=" + motherRegistrationNumber + ", fatherRegistrationNumber="
 				+ fatherRegistrationNumber + ", photoNumber=" + photoNumber + ", alias=" + alias + ", birthYear="
-				+ birthYear + ", sheepId=" + sheepId + "]";
+				+ birthYear + ", sheepId=" + sheepId + ", deathDate=" + deathDate + ", breeder=" + breeder + ", owner="
+				+ owner + ", genotype=" + genotype + "]";
 	}
 
 }

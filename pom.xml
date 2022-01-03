@@ -33,7 +33,12 @@
 			</plugin>
 		</plugins>
 	</build>
-	<dependencies>
+	<dependencies>	
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>5.6.3.Final</version>
+		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
