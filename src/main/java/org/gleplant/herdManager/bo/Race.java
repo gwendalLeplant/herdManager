@@ -17,6 +17,7 @@ public class Race {
 	@Column(name="race_id") 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer raceId;
+	@Column(name = "raceName")
 	private String name;
 
 	/**

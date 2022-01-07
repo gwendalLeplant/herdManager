@@ -1,7 +1,5 @@
 package org.gleplant.herdManager.bo;
 
-import java.time.LocalDateTime;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
@@ -25,16 +23,25 @@ public class Sheep {
 	@JoinColumn(name = "race_id", foreignKey = @ForeignKey(name = "sheep_FK"))
 	private Race race;
 	private Integer gender;
-	private LocalDateTime birthDate;
+	@Column(name = "birth_date")
+	private String birthDate;
 	private String comments;
+	@Column(name = "nom")
 	private String name;
+	@Column(name = "registration_number")
 	private String registationNumber;
+	@Column(name = "mother_registration_number")
 	private String motherRegistrationNumber;
+	@Column(name = "father_registration_number")
 	private String fatherRegistrationNumber;
+	@Column(name = "photo_number")
 	private Integer photoNumber;
+	@Column(name = "firstname")
 	private String alias;
+	@Column(name = "birth_year")
 	private Integer birthYear;
-	private LocalDateTime deathDate;
+	@Column(name = "death_date")
+	private String deathDate;
 	@ManyToOne
 	@JoinColumn(name = "breeder_id", foreignKey = @ForeignKey(name = "sheep_FK_2"))
 	private Person breeder;
@@ -77,14 +84,14 @@ public class Sheep {
 	 * @return the deathDate
 	 */
 	@JsonGetter("deathDate")
-	public LocalDateTime getDeathDate() {
+	public String getDeathDate() {
 		return deathDate;
 	}
 
 	/**
 	 * @param deathDate the deathDate to set
 	 */
-	public void setDeathDate(LocalDateTime deathDate) {
+	public void setDeathDate(String deathDate) {
 		this.deathDate = deathDate;
 	}
 
@@ -182,14 +189,14 @@ public class Sheep {
 	 * @return the birthDate
 	 */
 	@JsonGetter("birthDate")
-	public LocalDateTime getBirthDate() {
+	public String getBirthDate() {
 		return birthDate;
 	}
 
 	/**
 	 * @param birthDate the birthDate to set
 	 */
-	public void setBirthDate(LocalDateTime birthDate) {
+	public void setBirthDate(String birthDate) {
 		this.birthDate = birthDate;
 	}
 

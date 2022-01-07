@@ -14,14 +14,19 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 public class Person {
 
 	private String names;
+	@Column(name = "breeding_name")
 	private String breedingName;
+	@Column(name = "email_address")
 	private String emailAddress;
 	private String address;
 	private String city;
+	@Column(name = "zip_code")
 	private Integer zipCode;
 	private String country;
-	private Integer mobileNumber;
-	private Integer homeNumber;
+	@Column(name = "mobile_number")
+	private String mobileNumber;
+	@Column(name = "home_number")
+	private String homeNumber;
 	@Id
 	@Column(name = "person_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -146,14 +151,14 @@ public class Person {
 	 * @return the mobileNumber
 	 */
 	@JsonGetter("mobileNumber")
-	public Integer getMobileNumber() {
+	public String getMobileNumber() {
 		return mobileNumber;
 	}
 
 	/**
 	 * @param mobileNumber the mobileNumber to set
 	 */
-	public void setMobileNumber(Integer mobileNumber) {
+	public void setMobileNumber(String mobileNumber) {
 		this.mobileNumber = mobileNumber;
 	}
 
@@ -161,14 +166,14 @@ public class Person {
 	 * @return the homeNumber
 	 */
 	@JsonGetter("homeNumber")
-	public Integer getHomeNumber() {
+	public String getHomeNumber() {
 		return homeNumber;
 	}
 
 	/**
 	 * @param homeNumber the homeNumber to set
 	 */
-	public void setHomeNumber(Integer homeNumber) {
+	public void setHomeNumber(String homeNumber) {
 		this.homeNumber = homeNumber;
 	}
 

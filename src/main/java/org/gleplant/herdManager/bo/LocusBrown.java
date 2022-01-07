@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 @Table(name = "locus_brown")
 public class LocusBrown {
 
+	@Column(name = "allele_name")
 	private Integer alleleName;
 	@Id
 	@Column(name = "locus_brown_id")
