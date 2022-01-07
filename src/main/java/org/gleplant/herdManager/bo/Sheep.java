@@ -4,9 +4,12 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
@@ -15,7 +18,11 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 @Table(name = "sheep")
 public class Sheep {
 
+	@ManyToOne
+	@JoinColumn(name = "color_id", foreignKey = @ForeignKey(name = "sheep_FK_1"))
 	private Color color;
+	@ManyToOne
+	@JoinColumn(name = "race_id", foreignKey = @ForeignKey(name = "sheep_FK"))
 	private Race race;
 	private Integer gender;
 	private LocalDateTime birthDate;
@@ -27,15 +34,23 @@ public class Sheep {
 	private Integer photoNumber;
 	private String alias;
 	private Integer birthYear;
-	@Id 
-	@Column(name="sheep_id") 
+	private LocalDateTime deathDate;
+	@ManyToOne
+	@JoinColumn(name = "breeder_id", foreignKey = @ForeignKey(name = "sheep_FK_2"))
+	private Person breeder;
+	@ManyToOne
+	@JoinColumn(name = "owner_id", foreignKey = @ForeignKey(name = "sheep_FK_3"))
+	private Person owner;
+	@ManyToOne
+	@JoinColumn(name = "genotype_id", foreignKey = @ForeignKey(name = "sheep_FK_4"))
+	private Genotype genotype;
+	@ManyToOne
+	@JoinColumn(name = "carrier_of", foreignKey = @ForeignKey(name = "sheep_FK_5"))
+	private Color carrierOf;
+	@Id
+	@Column(name = "sheep_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer sheepId;
-	private LocalDateTime deathDate;
-	private Person breeder;
-	private Person owner;
-	private Genotype genotype;
-	
 
 	/**
 	 * 
@@ -44,67 +59,18 @@ public class Sheep {
 	}
 
 	/**
-	 * @param color
-	 * @param race
-	 * @param gender
-	 * @param birthDate
-	 * @param comments
-	 * @param name
-	 * @param registationNumber
-	 * @param motherRegistrationNumber
-	 * @param fatherRegistrationNumber
-	 * @param photoNumber
-	 * @param alias
-	 * @param birthYear
+	 * @return the carrierOf
 	 */
-	public Sheep(Color color, Race race, Integer gender, LocalDateTime birthDate, String comments, String name,
-			String registationNumber, String motherRegistrationNumber, String fatherRegistrationNumber,
-			Integer photoNumber, String alias, Integer birthYear) {
-		this.color = color;
-		this.race = race;
-		this.gender = gender;
-		this.birthDate = birthDate;
-		this.comments = comments;
-		this.name = name;
-		this.registationNumber = registationNumber;
-		this.motherRegistrationNumber = motherRegistrationNumber;
-		this.fatherRegistrationNumber = fatherRegistrationNumber;
-		this.photoNumber = photoNumber;
-		this.alias = alias;
-		this.birthYear = birthYear;
+	@JsonGetter("carrierOf")
+	public Color getCarrierOf() {
+		return carrierOf;
 	}
 
 	/**
-	 * @param color
-	 * @param race
-	 * @param gender
-	 * @param birthDate
-	 * @param comments
-	 * @param name
-	 * @param registationNumber
-	 * @param motherRegistrationNumber
-	 * @param fatherRegistrationNumber
-	 * @param photoNumber
-	 * @param alias
-	 * @param birthYear
-	 * @param sheepId
+	 * @param carrierOf the carrierOf to set
 	 */
-	public Sheep(Color color, Race race, Integer gender, LocalDateTime birthDate, String comments, String name,
-			String registationNumber, String motherRegistrationNumber, String fatherRegistrationNumber,
-			Integer photoNumber, String alias, Integer birthYear, Integer sheepId) {
-		this.color = color;
-		this.race = race;
-		this.gender = gender;
-		this.birthDate = birthDate;
-		this.comments = comments;
-		this.name = name;
-		this.registationNumber = registationNumber;
-		this.motherRegistrationNumber = motherRegistrationNumber;
-		this.fatherRegistrationNumber = fatherRegistrationNumber;
-		this.photoNumber = photoNumber;
-		this.alias = alias;
-		this.birthYear = birthYear;
-		this.sheepId = sheepId;
+	public void setCarrierOf(Color carrierOf) {
+		this.carrierOf = carrierOf;
 	}
 
 	/**
@@ -368,8 +334,8 @@ public class Sheep {
 				+ ", comments=" + comments + ", name=" + name + ", registationNumber=" + registationNumber
 				+ ", motherRegistrationNumber=" + motherRegistrationNumber + ", fatherRegistrationNumber="
 				+ fatherRegistrationNumber + ", photoNumber=" + photoNumber + ", alias=" + alias + ", birthYear="
-				+ birthYear + ", sheepId=" + sheepId + ", deathDate=" + deathDate + ", breeder=" + breeder + ", owner="
-				+ owner + ", genotype=" + genotype + "]";
+				+ birthYear + ", deathDate=" + deathDate + ", breeder=" + breeder + ", owner=" + owner + ", genotype="
+				+ genotype + ", carrierOf=" + carrierOf + ", sheepId=" + sheepId + "]";
 	}
 
 }
