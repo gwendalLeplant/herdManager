@@ -7,10 +7,10 @@ function clearDiv(div) {
     }
 }
 async function getSheepsFromServer(urlBase) {
-	urlBase += "/SheepServlet?param=getAllSheeps";
-//    let url = "http://localhost:8080/herdManagerGenotype/SheepServlet?param=getAllSheeps";
-    const response = await fetch(urlBase);
-    console.log(response);
+	let url = window.location.protocol;
+	url += urlBase;
+	url += "/SheepServlet?param=getAllSheeps";
+    const response = await fetch(url);
     sheepList = await response.json();
     for (let currentSheep of sheepList.Tab) {
         tabSheep.push(currentSheep);
@@ -43,7 +43,7 @@ function searchSheep() {
     displaySheepList(listToDisplay);
 }
 
-function displaySheepOnDivMiscellaneous(e) {
+function displaySheepOnDivMiscellaneous(e,urlBase) {
     let regNum = e.parentElement.parentElement.querySelector("#registrationNumber").innerHTML;
     let sheepToDisplay;
     for (sheep of tabSheep) {
@@ -61,6 +61,7 @@ function displaySheepOnDivMiscellaneous(e) {
         newSheepDiv.querySelector("#registrationNumber").innerHTML = sheepToDisplay.registationNumber;
         newSheepDiv.querySelector("#birthDate").innerHTML = sheepToDisplay.birthDate;
         newSheepDiv.querySelector("#comments").innerHTML = sheepToDisplay.comments;
+        newSheepDiv.querySelector("#sheepImage").setAttribute("src",window.location.protocol+urlBase+"/resources/images/"+sheepToDisplay.photoName);        
         document.querySelector("#divDisplayMiscellaneous").appendChild(newSheepDiv);
     }
 }

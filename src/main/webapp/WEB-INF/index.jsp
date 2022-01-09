@@ -14,7 +14,7 @@
 	crossorigin="anonymous" referrerpolicy="no-referrer" />
 <script type="text/javascript" src="js/script.js"></script>
 </head>
-<body onload="getSheepsFromServer('http://localhost:8080${ pageContext.request.contextPath}')">
+<body onload="getSheepsFromServer('${pageContext.request.contextPath}')">
 	<div class="container">
 	<div class="row">	
 		<div class="col-8" id="divDisplayMiscellaneous"></div>
@@ -48,7 +48,7 @@
 			</div>
 			<div class="col-2">
 				<button class="btn btn-success"
-					onclick="displaySheepOnDivMiscellaneous(this)">
+					onclick="displaySheepOnDivMiscellaneous(this,'${pageContext.request.contextPath}')">
 					<em class="fa fa-exchange-alt"></em>
 				</button>
 			</div>
@@ -72,7 +72,7 @@
 				<h3 id="comments"></h3>
 			</div>
 			<div class="col-4">
-				<img alt="Image représentant l'animal" src="">
+				<img id="sheepImage" alt="Image représentant l'animal" src="" width="200">
 			</div>
 		
 		</div>

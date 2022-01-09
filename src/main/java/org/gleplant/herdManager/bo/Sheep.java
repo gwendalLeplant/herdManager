@@ -1,5 +1,8 @@
 package org.gleplant.herdManager.bo;
 
+
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
@@ -36,6 +39,8 @@ public class Sheep {
 	private String fatherRegistrationNumber;
 	@Column(name = "photo_number")
 	private Integer photoNumber;
+	@Column(name = "photo_name")
+	private String photoName;
 	@Column(name = "firstname")
 	private String alias;
 	@Column(name = "birth_year")
@@ -288,6 +293,39 @@ public class Sheep {
 	 */
 	public void setPhotoNumber(Integer photoNumber) {
 		this.photoNumber = photoNumber;
+	}
+
+	/**
+	 * @return the photoName
+	 */
+	@JsonGetter("photoName")
+	public String getPhotoName() {
+		String res = null;
+		if(this.photoName==null) {
+			if(this.photoNumber==null) {
+				return null;
+			}else {
+				String[] extension = {"JPG","jpg","bmp"};
+				String path = "../../../../../../resources/images/"+this.photoNumber+"-0.";
+				for(String ext : extension) {
+					if(getClass().getResource(path+ext)!=null) {
+						String[] reslist = getClass().getResource(path+ext).getPath().split("/");
+						res = reslist[reslist.length-1];
+						break;
+					}
+				}				
+			}
+		}else {
+			res = this.photoName;
+		}
+		return res;
+	}
+
+	/**
+	 * @param photoName the photoName to set
+	 */
+	public void setPhotoName(String photoName) {
+		this.photoName = photoName;
 	}
 
 	/**
