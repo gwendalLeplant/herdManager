@@ -1,6 +1,5 @@
 package org.gleplant.herdManager.rest;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.gleplant.herdManager.bll.SheepManager;
@@ -18,36 +17,35 @@ import jakarta.ws.rs.PathParam;
 @Path("sheep")
 public class SheepREST {
 
-//	@GET
-//	public List<Sheep> getNotes() {
-//		return SheepManager.getAll();
-//	}
-//
-//	@GET
-//	@Path("/{id:\\d+}")
-//	public Note getNoteById(@PathParam("id") int id) {
-//		return NoteManager.selectById(id);
-//	}
-//
-//	@POST
-//	public Note insertNote(@FormParam("content") String content) {
-//		Note noteToInsert = new Note();
-//		noteToInsert.setContent(content);
-//		noteToInsert.setCreationDate(LocalDateTime.now());
-//		return NoteManager.insert(noteToInsert);
-//	}
-//
-//	@PUT
-//	@Path("/{id :  \\d+}")
-//	public Note updateNote(@PathParam("id") int id, @FormParam("content") String content) {
-//		Note noteToUpdate = NoteManager.selectById(id);
-//		noteToUpdate.setContent(content);
-//		return NoteManager.update(noteToUpdate);
-//	}
-//
-//	@DELETE
-//	@Path("/{id :  \\d+}")
-//	public Note deleteNoteById(@PathParam("id") int id) {
-//		return NoteManager.delete(NoteManager.selectById(id));
-//	}
+	@GET
+	public List<Sheep> getNotes() {
+		return SheepManager.selectAll();
+	}
+
+	@GET
+	@Path("/{id:\\d+}")
+	public Sheep getNoteById(@PathParam("id") int id) {
+		return SheepManager.selectById(id);
+	}
+
+	@POST
+	public Sheep insertSheep(@FormParam("content") String content) {
+		Sheep sheepToInsert = new Sheep();
+		// TODO code the form treatment
+		return SheepManager.insert(sheepToInsert);
+	}
+
+	@PUT
+	@Path("/{id :  \\d+}")
+	public Sheep updateSheep(@PathParam("id") int id, @FormParam("content") String content) {
+		Sheep sheepToUpdate = SheepManager.selectById(id);
+		// TODO code the form treatment
+		return SheepManager.update(sheepToUpdate);
+	}
+
+	@DELETE
+	@Path("/{id :  \\d+}")
+	public Sheep deleteSheepById(@PathParam("id") int id) {
+		return SheepManager.delete(SheepManager.selectById(id));
+	}
 }

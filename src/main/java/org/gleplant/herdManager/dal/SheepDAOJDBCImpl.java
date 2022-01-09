@@ -38,39 +38,45 @@ public class SheepDAOJDBCImpl {
 				.setParameter("param_nom", name).getSingleResult();
 	}
 
-	public static void insert(Sheep sheep) {
+	public static Sheep insert(Sheep sheep) {
 		Transaction t = session.beginTransaction();
 		try {
 			session.save(sheep);
 			session.flush();
 			t.commit();
+			return sheep;
 		} catch (RollbackException rbe) {
 			t.rollback();
 			System.err.println(rbe.getMessage());
+			return null;
 		}
 	}
 
-	public static void update(Sheep sheep) {
+	public static Sheep update(Sheep sheep) {
 		Transaction t = session.beginTransaction();
 		try {
 			session.update(sheep);
 			session.flush();
 			t.commit();
+			return sheep;
 		} catch (RollbackException rbe) {
 			t.rollback();
 			System.err.println(rbe.getMessage());
+			return null;
 		}
 	}
 	
-	public static void delete(Sheep sheep) {
+	public static Sheep delete(Sheep sheep) {
 		Transaction t = session.beginTransaction();
 		try {
 			session.delete(sheep);
 			session.flush();
 			t.commit();
+			return sheep;
 		} catch (RollbackException rbe) {
 			t.rollback();
 			System.err.println(rbe.getMessage());
+			return null;
 		}
 	}
 }

@@ -14,7 +14,7 @@
 	crossorigin="anonymous" referrerpolicy="no-referrer" />
 <script type="text/javascript" src="js/script.js"></script>
 </head>
-<body onload="getSheepsFromServer()">
+<body onload="getSheepsFromServer('http://localhost:8080${ pageContext.request.contextPath}')">
 	<div class="container">
 	<div class="row">	
 		<div class="col-8" id="divDisplayMiscellaneous"></div>

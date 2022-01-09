@@ -10,7 +10,6 @@ public class Test {
 		try {
 			System.out.println(SheepManager.getAllJSON());
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
