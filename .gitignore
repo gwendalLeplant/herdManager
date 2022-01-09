@@ -7,5 +7,6 @@ src/*/*.class
 /src/main/java/hibernate.cfg.xml
 /src/main/java/database.properties
 /src/main/webapp/WEB-INF/lib/*.jar
+/src/main/webapp/resources/images/*
 /build/
 /target/
