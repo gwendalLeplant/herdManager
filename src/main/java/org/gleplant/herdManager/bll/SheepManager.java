@@ -1,53 +1,46 @@
 package org.gleplant.herdManager.bll;
 
 import java.util.List;
-import java.util.TimeZone;
+
+import javax.transaction.Transactional;
 
 import org.gleplant.herdManager.bo.Sheep;
 import org.gleplant.herdManager.dal.SheepDAOJDBCImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
-
+@Service
+@Primary
 public class SheepManager {
-
-	public static List<Sheep> selectAll() {
-		return SheepDAOJDBCImpl.selectAll();
+	
+	@Autowired
+	SheepDAOJDBCImpl sheepDAO;
+	
+	@Transactional
+	public List<Sheep> selectAll() {
+		return (List<Sheep>)sheepDAO.findAll();
+	}
+	
+	@Transactional
+	public Sheep selectById(Integer id) {
+		return sheepDAO.findById(id).orElse(null);
+	}
+	
+	@Transactional
+	public Sheep insert(Sheep sheepToInsert) {
+		return sheepDAO.save(sheepToInsert);
+	}
+	
+	@Transactional
+	public Sheep update(Sheep sheepToUpdate) {
+		return sheepDAO.save(sheepToUpdate);
 	}
 
-	public static Sheep selectById(Integer id) {
-		return SheepDAOJDBCImpl.selectById(id);
-	}
-
-	public static Sheep insert(Sheep sheepToInsert) {
-		return SheepDAOJDBCImpl.insert(sheepToInsert);
-	}
-
-	public static Sheep update(Sheep sheepToUpdate) {
-		return SheepDAOJDBCImpl.update(sheepToUpdate);
-	}
-
-	public static Sheep delete(Sheep sheepToDelete) {
-		return SheepDAOJDBCImpl.delete(sheepToDelete);
-	}
-
-	public static String getAllJSON() throws JsonProcessingException {
-		String result = "{\"Tab\":[";
-		List<Sheep> lst = selectAll();
-		for (int i = 0; i < lst.size(); i++) {
-			ObjectMapper mapper = new ObjectMapper();
-			mapper.setTimeZone(TimeZone.getDefault());
-			mapper.registerModule(new JSR310Module());
-			mapper.setSerializationInclusion(Include.NON_NULL);
-			result += mapper.writeValueAsString(lst.get(i));
-			if (i < lst.size() - 1) {
-				result += ",";
-			} else {
-				result += "]}";
-			}
-		}
-		return result;
+	@Transactional
+	public Sheep delete(Sheep sheepToDelete) {
+		sheepDAO.delete(sheepToDelete);
+		return sheepToDelete;
+				
 	}
 }
