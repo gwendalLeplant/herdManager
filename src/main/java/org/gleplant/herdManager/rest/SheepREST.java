@@ -28,14 +28,20 @@ public class SheepREST {
 	public Sheep getNoteById(@PathVariable("id") int id) {
 		return sheepManager.selectById(id);
 	}
+	
+	@GetMapping("WS/sheep/genealogy/{id}")
+	public List<Sheep> getGenealogyById(@PathVariable("id") int id) {
+		return sheepManager.getGenealogyOnNGeneration(sheepManager.selectById(id), 5);
+	}
+
 
 	@PostMapping("WS/sheep")
-	public Sheep insertSheep(@RequestBody Sheep sheepToInsert) {
+	public Sheep insertSheep(@RequestBody Sheep sheepToInsert) throws Exception {
 		return sheepManager.insert(sheepToInsert);
 	}
 
 	@PutMapping("WS/sheep")
-	public Sheep updateSheep(@RequestBody Sheep sheepToUpdate) {
+	public Sheep updateSheep(@RequestBody Sheep sheepToUpdate) throws Exception {
 		return sheepManager.update(sheepToUpdate);
 	}
 

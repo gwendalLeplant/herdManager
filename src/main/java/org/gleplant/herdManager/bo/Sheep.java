@@ -10,8 +10,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
@@ -34,7 +36,7 @@ public class Sheep {
 	@Column(name = "nom")
 	private String name;
 	@Column(name = "registration_number")
-	private String registationNumber;
+	private String registrationNumber;
 	@Column(name = "mother_registration_number")
 	private String motherRegistrationNumber;
 	@Column(name = "father_registration_number")
@@ -42,6 +44,7 @@ public class Sheep {
 	@Column(name = "photo_number")
 	private Integer photoNumber;
 	@Column(name = "photo_name")
+	@Getter(AccessLevel.NONE)
 	private String photoName;
 	@Column(name = "firstname")
 	private String alias;
@@ -66,4 +69,25 @@ public class Sheep {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer sheepId;
 
+	public String getPhotoName() {
+		String res = null;
+		if(this.photoName==null) {
+			if(this.photoNumber==null) {
+				return null;
+			}else {
+				String[] extension = {"JPG","jpg","bmp"};
+				String path = "../../../../images/"+this.photoNumber+"-0.";
+				for(String ext : extension) {
+					if(getClass().getResource(path+ext)!=null) {
+						String[] reslist = getClass().getResource(path+ext).getPath().split("/");
+						res = reslist[reslist.length-1];
+						break;
+					}
+				}				
+			}
+		}else {
+			res = this.photoName;
+		}
+		return res;
+	}
 }

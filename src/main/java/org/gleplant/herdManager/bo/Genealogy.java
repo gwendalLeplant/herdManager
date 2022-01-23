@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Genealogy {
-	private Sheep child;
 	private Sheep mother;
 	private Sheep father;
 }
