@@ -8,7 +8,7 @@ src/*/*.class
 /src/main/java/database.properties
 /src/main/resources/application.properties
 /src/main/webapp/WEB-INF/lib/*.jar
-/src/main/webapp/resources/images/*
+/src/main/webapp/images/*
 /build/
 /target/
 HELP.md
