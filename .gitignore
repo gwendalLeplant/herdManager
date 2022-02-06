@@ -17,6 +17,9 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+src/main/resources/frontend/front/.browserslistrc
+src/main/resources/frontend/front/.editorconfig
+src/main/resources/frontend/front/.gitignore
 
 ### STS ###
 .apt_generated

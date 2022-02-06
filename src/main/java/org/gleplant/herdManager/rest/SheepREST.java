@@ -2,52 +2,50 @@ package org.gleplant.herdManager.rest;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.gleplant.herdManager.bll.SheepManager;
 import org.gleplant.herdManager.bo.Sheep;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class SheepREST {
+@RequestMapping("/WS/sheep")
+public class SheepREST implements CrudREST<Sheep>{
 
 	@Autowired
-	SheepManager sheepManager;
+	SheepManager manager;
 	
-	@GetMapping("WS/sheep")
-	public List<Sheep> getNotes() {
-		return sheepManager.selectAll();
-	}
-
-	@GetMapping("WS/sheep/{id}")
-	public Sheep getNoteById(@PathVariable("id") int id) {
-		return sheepManager.selectById(id);
-	}
-	
-	@GetMapping("WS/sheep/genealogy/{id}")
+	@GetMapping("/genealogy/{id}")
 	public List<Sheep> getGenealogyById(@PathVariable("id") int id) {
-		return sheepManager.getGenealogyOnNGeneration(sheepManager.selectById(id), 5);
+		return manager.getGenealogyOnNGeneration(manager.selectById(id), 5);
+	}
+	
+	@Override
+	public List<Sheep> getAll() {
+		return manager.selectAll();
 	}
 
-
-	@PostMapping("WS/sheep")
-	public Sheep insertSheep(@RequestBody Sheep sheepToInsert) throws Exception {
-		return sheepManager.insert(sheepToInsert);
+	@Override
+	public Sheep getById(Integer id) {
+		return manager.selectById(id);
 	}
 
-	@PutMapping("WS/sheep")
-	public Sheep updateSheep(@RequestBody Sheep sheepToUpdate) throws Exception {
-		return sheepManager.update(sheepToUpdate);
+	@Override
+	public Sheep insert(@Valid Sheep objectToInsert) throws Exception {
+		return manager.insert(objectToInsert);
 	}
 
+	@Override
+	public Sheep update(Integer id, @Valid Sheep objectToUpdate) throws Exception {
+		return manager.update(objectToUpdate);
+	}
 
-	@DeleteMapping("WS/sheep/{id}")
-	public Sheep deleteSheepById(@PathVariable("id") int id) {
-		return sheepManager.delete(sheepManager.selectById(id));
+	@Override
+	public Sheep deleteById(Integer id) {
+		return manager.delete(manager.selectById(id));
 	}
 }
