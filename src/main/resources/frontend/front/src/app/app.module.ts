@@ -8,6 +8,7 @@ import { SheepInfoComponent } from './sheep-info/sheep-info.component';
 import { NewSheepComponent } from './new-sheep/new-sheep.component';
 import { ListSheepComponent } from './list-sheep/list-sheep.component';
 import { SettingsComponent } from './settings/settings.component';
+import { GenealogyComponent } from './genealogy/genealogy.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { SettingsComponent } from './settings/settings.component';
     SheepInfoComponent,
     NewSheepComponent,
     ListSheepComponent,
-    SettingsComponent
+    SettingsComponent,
+    GenealogyComponent
   ],
   imports: [
     BrowserModule,
