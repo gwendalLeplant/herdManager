@@ -1,1 +1,9 @@
-<p>list-sheep works!</p>
+<div *ngIf="this.sheeps.length != 0" class="container-fluid">
+    <input class="form-control" type="text" placeholder="Nom ou identifiant de l'animal" (change)="onChangeSheepSelected()" [(ngModel)]="strToSearch">
+    <div class="mt-3">
+        <div *ngFor="let s of this.sheepsSelected" class="row d-flex justify-content-between mt-1">
+            <div class="col-sm-6 col-12">{{s.name}}</div>
+            <div class="col-sm-6 col-12 d-flex justify-content-end"><button (click)="onDisplaySheep(s.sheepId)" class="btn btn-primary">GO</button></div>
+        </div>
+    </div>
+</div>

@@ -1,10 +1,10 @@
 <div class="container mt-3">
     <div class="row">
-        <div class="col-12 col-md-10">
-            <app-sheep-info></app-sheep-info>
+        <div class="col-12 col-md-8">
+            <app-sheep-info [sheep]="this.sheeps[this.listComponent.idToDisplay]"></app-sheep-info>
         </div>
-        <div class="col-12 col-md-2">
-            <app-list-sheep></app-list-sheep>
+        <div class="col-12 col-md-4">
+            <app-list-sheep [sheeps]="this.sheeps"></app-list-sheep>
         </div>
     </div>
 </div>

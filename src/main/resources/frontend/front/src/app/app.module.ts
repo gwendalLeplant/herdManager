@@ -9,6 +9,10 @@ import { NewSheepComponent } from './new-sheep/new-sheep.component';
 import { ListSheepComponent } from './list-sheep/list-sheep.component';
 import { SettingsComponent } from './settings/settings.component';
 import { GenealogyComponent } from './genealogy/genealogy.component';
+import { SheepService } from './services/sheep.services';
+import { MiscService } from './services/misc.services';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -22,9 +26,15 @@ import { GenealogyComponent } from './genealogy/genealogy.component';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    HttpClientModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    SheepService,
+    ListSheepComponent,
+    MiscService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

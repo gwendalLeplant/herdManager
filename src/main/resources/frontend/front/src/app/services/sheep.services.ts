@@ -11,7 +11,7 @@ export class SheepService{
     private sheep:any[] = [];
     private idx:number = 0;
 
-    private sheepSubject = new Subject();
+    public sheepSubject = new Subject();
 
     constructor(private httpClient:HttpClient){}
 
@@ -31,40 +31,41 @@ export class SheepService{
       );
     }
 
-    async sheepSubscribe(sheepSubscription:Subscription):Promise<any[]>{
-        // Récupération de la base de donnée
-        this.getAllFromServer();
-        // Instanciation du tableau à retourner
-        let app:any[] = [];
-        // Abonnement et mise à jour du tableau
-        sheepSubscription = this.sheepSubject.subscribe(
-            (p: any) => {
-            app = p;
-            }
-        );
-        // Emission de la mise à jour du tableau
-        this.emitSheepSubject();
-        return app;
-    }
+    // async sheepSubscribe(sheepSubscription:Subscription):Promise<any[]>{
+    //     let app:any[] = [];
+    //     // Récupération de la base de donnée
+    //     this.getAllFromServer().then(()=>{
+    //     // Abonnement et mise à jour du tableau
+    //     sheepSubscription = this.sheepSubject.subscribe(
+    //         (p: any) => {
+    //         app = p;
+    //         }
+    //     );        
+    //     // Emission de la mise à jour du tableau
+    //     this.emitSheepSubject();
+    //       }
+    //     );
+
+    //     return app;
+    // }
 
     emitSheepSubject(){
         this.sheepSubject.next(this.sheep);
+        console.log(this.sheep);
     }
 
-    getAllFromServer(){
-      this.httpClient.get<any[]>(this.url,{responseType:'json'}).subscribe(
-        response => {
-          if(response != undefined){
-            this.idx=0;
-            this.sheep = [];
-          for(let o of response){
-            this.idx++; 
-            this.sheep.push(o);
-          }
-        }
-         this.emitSheepSubject();  
-         console.log(this.sheep);
-        }
-      );
+    async getAllFromServer(){      
+        this.httpClient.get<any[]>(this.url,{responseType:'json'}).subscribe(
+          response => {
+            if(response != undefined){
+              this.idx=0;
+              this.sheep = [];
+              for(let o of response){
+                this.idx++; 
+                this.sheep.push(o);
+              }
+            }
+            this.emitSheepSubject();
+          });
     }
 }

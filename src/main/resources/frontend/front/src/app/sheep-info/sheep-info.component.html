@@ -1,4 +1,9 @@
-<div class="container-fluid">
-    <p>sheep-info works!</p>
-    <app-genealogy></app-genealogy>
+<div *ngIf="sheep!=undefined" class="container-fluid">
+    <div class="row">
+        <p>{{sheep.name}}</p>
+        <p>{{sheep.registationNumber}}</p>
+    </div>
+    <div class="row">
+        <app-genealogy>[sheepId]="sheep.sheepId"</app-genealogy>
+    </div>
 </div>
