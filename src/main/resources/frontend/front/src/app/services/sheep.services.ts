@@ -7,29 +7,42 @@ import { Subject, Subscription } from 'rxjs';
   providedIn: 'root'
 })
 export class SheepService{
-    private url = "http://localhost:8080/WS/sheep/";
-    private sheep:any[] = [];
-    private idx:number = 0;
+  private url = "http://localhost:8080/WS/sheep/";
+  private sheep:any[] = [];
+  private sheepSelected:any;
 
-    public sheepSubject = new Subject();
+  public sheepSubject = new Subject();
+  public selectedSheepSubject = new Subject();
 
-    constructor(private httpClient:HttpClient){}
+  constructor(private httpClient:HttpClient){}
 
-    addSheep() {
-        let r;
-    //   const headers = { 'content-type': 'application/json'}  
-    //   let r ={
-    //     "client": {"clientId": clientSelect},
-    //     "sceance": {"sceanceId": sceanceSelect},
-    //     "nombrePlaces": nbPlaces,
-    //     "reduction": "0"
-    //   } 
-      this.httpClient.post(this.url,r).subscribe(
-        (response) =>{
-          this.getAllFromServer();
-          console.log (response)}
-      );
+  setSheepSelected(idx:number){
+    for(let sh of this.sheep){
+      if(sh.sheepId == idx){
+        this.sheepSelected = sh;
+        this.emitSelectedSheepSubject();
+        break;
+      }
     }
+  }
+  emitSelectedSheepSubject() {
+    this.selectedSheepSubject.next(this.sheepSelected);
+  }
+  addSheep() {
+      let r;
+  //   const headers = { 'content-type': 'application/json'}  
+  //   let r ={
+  //     "client": {"clientId": clientSelect},
+  //     "sceance": {"sceanceId": sceanceSelect},
+  //     "nombrePlaces": nbPlaces,
+  //     "reduction": "0"
+  //   } 
+    this.httpClient.post(this.url,r).subscribe(
+      (response) =>{
+        this.getAllFromServer();
+      }
+    );
+  }
 
     // async sheepSubscribe(sheepSubscription:Subscription):Promise<any[]>{
     //     let app:any[] = [];
@@ -49,23 +62,20 @@ export class SheepService{
     //     return app;
     // }
 
-    emitSheepSubject(){
-        this.sheepSubject.next(this.sheep);
-        console.log(this.sheep);
-    }
+  emitSheepSubject(){
+      this.sheepSubject.next(this.sheep);
+  }
 
-    async getAllFromServer(){      
-        this.httpClient.get<any[]>(this.url,{responseType:'json'}).subscribe(
-          response => {
-            if(response != undefined){
-              this.idx=0;
-              this.sheep = [];
-              for(let o of response){
-                this.idx++; 
-                this.sheep.push(o);
-              }
-            }
-            this.emitSheepSubject();
-          });
-    }
+  async getAllFromServer(){      
+    this.httpClient.get<any[]>(this.url,{responseType:'json'}).subscribe(
+      response => {
+        if(response != undefined){          
+          this.sheep = [];
+          for(let o of response){            
+            this.sheep.push(o);
+          }
+        }
+        this.emitSheepSubject();
+      });
+  }
 }

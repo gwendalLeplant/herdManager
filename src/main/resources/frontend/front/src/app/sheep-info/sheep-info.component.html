@@ -1,9 +1,23 @@
 <div *ngIf="sheep!=undefined" class="container-fluid">
     <div class="row">
-        <p>{{sheep.name}}</p>
-        <p>{{sheep.registationNumber}}</p>
-    </div>
-    <div class="row">
-        <app-genealogy>[sheepId]="sheep.sheepId"</app-genealogy>
+        <div class="col-12 col-md-8">
+            <div class="row">
+                <p>Nom : {{sheep.name}}</p>
+                <p>Identifiant : {{sheep.registrationNumber}}</p>
+                <p>Date de naissance : {{sheep.birthDate}}</p>
+                <p *ngIf="sheep.deatDate!=null">Date de décès : {{sheep.deathDate}}</p>
+            </div>
+            <div class="row mt-2">
+                <p>Propriétaire : {{sheep.owner.names}}</p>
+                <p>Eleveur : {{sheep.breeder.names}}</p>
+            </div>
+            <div class="row mt-2">
+                <p>Couleur : {{sheep.color.name}}</p>
+                <p *ngIf="sheep.carrierOf.name!='Inconnue'">Porteur de : {{sheep.carrierOf.name}}</p>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <img class="img-fluid" src="../assets/images/{{sheep.photoName}}" alt="Sheep picture">
+        </div>
     </div>
 </div>

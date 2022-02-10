@@ -13,6 +13,7 @@ import { SheepService } from './services/sheep.services';
 import { MiscService } from './services/misc.services';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { TreeModule } from '@circlon/angular-tree-component';
 
 @NgModule({
   declarations: [
@@ -28,11 +29,11 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     FormsModule,
     HttpClientModule,
+    TreeModule,
     AppRoutingModule
   ],
   providers: [
     SheepService,
-    ListSheepComponent,
     MiscService
   ],
   bootstrap: [AppComponent]

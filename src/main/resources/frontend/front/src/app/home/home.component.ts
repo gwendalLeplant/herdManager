@@ -11,17 +11,19 @@ import { SheepService } from '../services/sheep.services';
 export class HomeComponent implements OnInit, OnDestroy {
 
   sheeps:any[] = [];
-  public idx:number = 0;
+  sheepSelected:any;
+  selectedSheepSubscription!:Subscription;
   sheepSubscription!:Subscription;
 
-  constructor(private sheepService:SheepService,public listComponent:ListSheepComponent) { }
+  constructor(private sheepService:SheepService) { }
 
   ngOnDestroy(): void {
     this.sheepSubscription.unsubscribe();
+    this.selectedSheepSubscription.unsubscribe();
   }
 
+
   ngOnInit(): void {
-    console.log("home subscribing");
     // Abonnement et mise à jour du tableau
     this.sheepSubscription = this.sheepService.sheepSubject.subscribe(
         (p: any) => {
@@ -29,8 +31,13 @@ export class HomeComponent implements OnInit, OnDestroy {
         }
     );        
     // Emission de la mise à jour du tableau
-    this.sheepService.emitSheepSubject();          
-    console.log("home subscribed");
+    this.sheepService.emitSheepSubject();     
+    this.selectedSheepSubscription = this.sheepService.selectedSheepSubject.subscribe(
+      (p: any) => {
+      this.sheepSelected = p;
+      }
+    )  
+    this.sheepService.emitSelectedSheepSubject();
     // Récupération de la base de donnée
     this.sheepService.getAllFromServer();
   }

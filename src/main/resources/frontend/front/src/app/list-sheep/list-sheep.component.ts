@@ -1,5 +1,5 @@
 import { Component, Input} from '@angular/core';
-import { HomeComponent } from '../home/home.component';
+import { SheepService } from '../services/sheep.services';
 
 @Component({
   selector: 'app-list-sheep',
@@ -13,6 +13,9 @@ export class ListSheepComponent  {
   strToSearch = '';
   idToDisplay:number = 0;
 
+
+  constructor(private sheepService:SheepService) { }
+
   onChangeSheepSelected(){
     if(this.strToSearch!=''){
       this.sheepsSelected = [];
@@ -25,9 +28,7 @@ export class ListSheepComponent  {
   }
 
   onDisplaySheep(id:number){
-    this.idToDisplay = id;
-    console.log(this.idToDisplay);
+    this.sheepService.setSheepSelected(id);
   }
-  constructor() { }
 
 }

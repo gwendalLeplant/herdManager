@@ -1,9 +1,14 @@
 <div class="container mt-3">
     <div class="row">
         <div class="col-12 col-md-8">
-            <app-sheep-info [sheep]="this.sheeps[this.listComponent.idToDisplay]"></app-sheep-info>
+            <div class="row">
+                <app-sheep-info [sheep]="this.sheepSelected"></app-sheep-info>
+            </div>
+            <div class="row">
+                <app-genealogy [sheep]="this.sheepSelected"></app-genealogy>
+            </div>
         </div>
-        <div class="col-12 col-md-4">
+        <div class="col-12 col-md-2">
             <app-list-sheep [sheeps]="this.sheeps"></app-list-sheep>
         </div>
     </div>
