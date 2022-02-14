@@ -27,6 +27,7 @@ public class SheepManager extends CrudManager<Sheep,SheepDAOJDBCImpl>{
 	@Transactional
 	public Genealogy getGenealogy(Sheep sh) {
 		Genealogy gen = new Genealogy();
+		gen.setChild(sh);
 		if (sh.getFatherRegistrationNumber() != null && sh.getFatherRegistrationNumber() != "UNKNOWN") {
 			// TODO Purge database from doublons
 			List<Sheep> lst = selectByRegistrationNumber(sh.getFatherRegistrationNumber());
@@ -45,27 +46,48 @@ public class SheepManager extends CrudManager<Sheep,SheepDAOJDBCImpl>{
 	}
 
 	@Transactional
-	public List<Sheep> getGenealogyOnNGeneration(Sheep sh, Integer nbGenerations) {		
-		List<Sheep> listGen = new ArrayList<Sheep>();
-		Sheep sheepNode = sh;
-		Genealogy sheepNodeGenealogy;
-		// For each generations
-		listGen.add(sheepNode);
-		for (int i = 0; i < nbGenerations; i++) {
-			int nbGenealogyToFind = (int) (Math.pow(2, i));
-			// For each individual in a generation
-			for (int j = 0; j < nbGenealogyToFind; j++) {
-				// Get genealogy for the new sheep node
-				sheepNodeGenealogy = getGenealogy(sheepNode);
-				// Add this genealogy to the list to return
-				listGen.add(sheepNodeGenealogy.getFather());
-				listGen.add(sheepNodeGenealogy.getMother());
-				sheepNode = listGen.get(listGen.size()-1-nbGenealogyToFind+j);				
-			}
-		}
-		return listGen;
-	}
+//	public List<Sheep> getGenealogyOnNGeneration(Sheep sh, Integer nbGenerations) {		
+//		List<Sheep> listGen = new ArrayList<Sheep>();
+//		Sheep sheepNode = sh;
+//		Genealogy sheepNodeGenealogy;
+//		// For each generations
+//		listGen.add(sheepNode);
+//		for (int i = 0; i < nbGenerations; i++) {
+//			int nbGenealogyToFind = (int) (Math.pow(2, i));
+//			// For each individual in a generation
+//			for (int j = 0; j < nbGenealogyToFind; j++) {
+//				// Get genealogy for the new sheep node
+//				sheepNodeGenealogy = getGenealogy(sheepNode);
+//				// Add this genealogy to the list to return
+//				listGen.add(sheepNodeGenealogy.getFather());
+//				listGen.add(sheepNodeGenealogy.getMother());
+//				sheepNode = listGen.get(listGen.size()-1-nbGenealogyToFind+j);				
+//			}
+//		}
+//		return listGen;
+//	}
 
+	public List<Genealogy> getGenealogyOnNGeneration(Sheep sh, Integer nbGenerations) {		
+	List<Genealogy> listGen = new ArrayList<Genealogy>();
+	Sheep sheepNode = sh;
+	Genealogy sheepNodeGenealogy = getGenealogy(sheepNode);
+	// For each generations
+	listGen.add(sheepNodeGenealogy);
+	for (int i = 0; i < nbGenerations; i++) {
+		int nbGenealogyToFind = (int) (Math.pow(2, i));
+		// For each individual in a generation
+		for (int j = 0; j < nbGenealogyToFind; j++) {
+			// Get genealogy for the new sheep node
+			sheepNodeGenealogy = getGenealogy(sheepNode);
+			// Add this genealogy to the list to return
+			listGen.add(getGenealogy(sheepNodeGenealogy.getFather()));
+			listGen.add(getGenealogy(sheepNodeGenealogy.getMother()));
+			sheepNode = listGen.get(listGen.size()-1-nbGenealogyToFind+j).getChild();				
+		}
+	}
+	return listGen;
+}
+	
 	public List<String> getAllRegistrationNumber() {
 		return sheepDAO.getAllRegistrationNumber();
 	}

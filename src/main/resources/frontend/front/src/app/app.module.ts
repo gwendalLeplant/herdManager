@@ -28,8 +28,8 @@ import { TreeModule } from '@circlon/angular-tree-component';
   imports: [
     BrowserModule,
     FormsModule,
-    HttpClientModule,
     TreeModule,
+    HttpClientModule,
     AppRoutingModule
   ],
   providers: [

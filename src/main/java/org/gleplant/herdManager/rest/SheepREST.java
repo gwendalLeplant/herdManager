@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.gleplant.herdManager.bll.SheepManager;
+import org.gleplant.herdManager.bo.Genealogy;
 import org.gleplant.herdManager.bo.Sheep;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +21,7 @@ public class SheepREST implements CrudREST<Sheep>{
 	SheepManager manager;
 	
 	@GetMapping("/genealogy/{id}")
-	public List<Sheep> getGenealogyById(@PathVariable("id") int id) {
+	public List<Genealogy> getGenealogyById(@PathVariable("id") int id) {
 		return manager.getGenealogyOnNGeneration(manager.selectById(id), 5);
 	}
 	
