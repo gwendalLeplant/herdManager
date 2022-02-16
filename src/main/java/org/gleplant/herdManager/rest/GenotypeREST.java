@@ -8,7 +8,9 @@ import org.gleplant.herdManager.bll.GenotypeManager;
 import org.gleplant.herdManager.bo.Genotype;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
 @RequestMapping("/WS/genotype")
 public class GenotypeREST implements CrudREST<Genotype> {
 

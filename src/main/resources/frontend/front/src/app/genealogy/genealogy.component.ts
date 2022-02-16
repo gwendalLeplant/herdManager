@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { ITreeOptions, TreeComponent, TreeNode} from '@circlon/angular-tree-component';
+import { ITreeOptions, TreeComponent, TreeNode, TreeNodeComponent} from '@circlon/angular-tree-component';
 
 @Component({
   selector: 'app-genealogy',
@@ -14,26 +14,13 @@ export class GenealogyComponent implements OnInit, OnChanges {
   @ViewChild('tree')
   tree!: TreeComponent;
 
-  nodes = [
-    {
-      id: 0,
-      name:'',
-      children: [
-        {
-          id: 1,
-          name: ''
-        },{
-          id: 2,
-          name: ''
-        }
-      ]
-    }
-  ];
+  nodes:any[] = [];
 
   options: ITreeOptions = {
-    idField: 'id'
+    idField: 'id',
+    // useVirtualScroll: true,
     // displayField: 'nodeName',
-    // isExpandedField: 'expanded',
+    // isExpandedField: 'expanded'
     // idField: 'id',
     // hasChildrenField: 'nodes',
     // nodeHeight: 23,
@@ -80,25 +67,7 @@ export class GenealogyComponent implements OnInit, OnChanges {
   }
 
   updateTree() {
-    // Root creation
-    this.nodes =[
-      {
-        id: this.genealogy[0].child.sheepId,
-        name: this.genealogy[0].child.name,
-        children: [
-          {
-            id: this.genealogy[0].father.sheepId,
-            name: this.genealogy[0].father.name
-          },{
-            id: this.genealogy[0].mother.sheepId,
-            name: this.genealogy[0].mother.name
-          }
-        ]
-      }
-    ];
-    console.log(this.nodes);
-    console.log(this.tree);
-    for(let i = 1;i<this.genealogy.length;i++){
+    for(let i = 0;i<this.genealogy.length;i++){
       let newNode =     {
         id: this.genealogy[i].child.sheepId,
         name: this.genealogy[i].child.name,
@@ -108,12 +77,22 @@ export class GenealogyComponent implements OnInit, OnChanges {
             name: this.genealogy[i].father.name
           },{
             id: this.genealogy[i].mother.sheepId,
-            name: this.genealogy[i].mother.name
+            name: this.genealogy[i].mother.name 
           }
         ]
       }      
-      this.nodes.push(newNode);
-    }      
+      if(i!=0){
+        if(newNode.name!=""){
+          const someNode = this.tree.treeModel.getNodeById(newNode.id);
+          someNode.data.children = newNode.children;
+        }
+      }
+      else{
+        this.nodes.length = 0;
+        this.nodes.push(newNode);        
+      }
+      this.tree.treeModel.update();      
+    }     
   }  
 
   

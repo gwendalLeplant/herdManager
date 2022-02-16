@@ -8,7 +8,9 @@ import org.gleplant.herdManager.bll.LocusSpottedManager;
 import org.gleplant.herdManager.bo.LocusSpotted;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
 @RequestMapping("/WS/locusSpotted")
 public class LocusSpottedREST implements CrudREST<LocusSpotted> {
 

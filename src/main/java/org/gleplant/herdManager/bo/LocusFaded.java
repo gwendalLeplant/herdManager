@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 public class LocusFaded {
 
 	@Column(name = "allele_name")
-	private Integer alleleName;
+	private String alleleName;
 	@Id
 	@Column(name = "locus_faded_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

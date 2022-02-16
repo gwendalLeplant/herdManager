@@ -8,7 +8,9 @@ import org.gleplant.herdManager.bll.ColorManager;
 import org.gleplant.herdManager.bo.Color;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
 @RequestMapping("/WS/color")
 public class ColorRest implements CrudREST<Color> {
 

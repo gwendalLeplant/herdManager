@@ -8,7 +8,9 @@ import org.gleplant.herdManager.bll.LocusFadedManager;
 import org.gleplant.herdManager.bo.LocusFaded;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
 @RequestMapping("/WS/locusFaded")
 public class LocusFadedREST implements CrudREST<LocusFaded> {
 

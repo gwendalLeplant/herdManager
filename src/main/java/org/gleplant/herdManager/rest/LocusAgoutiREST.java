@@ -8,7 +8,9 @@ import org.gleplant.herdManager.bll.LocusAgoutiManager;
 import org.gleplant.herdManager.bo.LocusAgouti;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
 @RequestMapping("/WS/locusAgouti")
 public class LocusAgoutiREST implements CrudREST<LocusAgouti> {
 	

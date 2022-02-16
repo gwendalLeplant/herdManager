@@ -1,3 +1,137 @@
-<div class="container mt-3">
-    <p>new-sheep works!</p>
+<div class="container">
+    <form (ngSubmit)="onSubmit()" #sheepForm="ngForm">
+        <div class="row">
+            <div class="col-12 col-md-6 form-group">
+                <label for="name">Nom *</label>
+                <input type="text" class="form-control" id="name" required [(ngModel)]="model.name" name="name" #name="ngModel">
+                <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+                    Il faut saisir un nom
+                </div>
+            </div>
+            <div class="col-12 col-md-6 form-group">
+                <label for="registrationNumber">Identifiant</label>
+                <input type="text" class="form-control" id="registrationNumber" [(ngModel)]="model.registrationNumber" name="registrationNumber" #name="ngModel">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6 form-group">
+                <label for="birthDate">Date de naissance *</label>
+                <input type="date" class="form-control" id="birthDate" required [(ngModel)]="model.birthDate" name="birthDate" #birthDate="ngModel">
+                <div [hidden]="birthDate.valid || birthDate.pristine" class="alert alert-danger">
+                    Il faut saisir une date de naissance
+                </div>
+            </div>
+            <div class="col-12 col-md-6 form-group">
+                <label for="deathDate">Date de mort</label>
+                <input type="date" class="form-control" id="deathDate" [(ngModel)]="model.deathDate" name="deathDate" #deathDate="ngModel">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6 form-group">
+                <label for="gender">Genre</label>
+                <select class="form-control" id="gender" [(ngModel)]="model.gender" name="gender" #gender="ngModel">
+            <option *ngFor="let pow of powers" [value]="pow.value">{{pow.tag}}</option>
+          </select>
+            </div>
+            <div class="col-12 col-md-6 form-group">
+                <label for="race">Race</label>
+                <select class="form-control" id="race" [(ngModel)]="model.race" name="race" #race="ngModel">
+            <option *ngFor="let r of races" [value]="r.raceId">{{r.name}}</option>
+          </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6 form-group">
+                <label for="color">Couleur</label>
+                <select class="form-control" id="father" [(ngModel)]="model.color" name="color" #color="ngModel">
+            <option *ngFor="let c of colors" [value]="c.colorId">{{c.name}}</option>
+          </select>
+            </div>
+            <div class="col-12 col-md-6 form-group">
+                <label for="carrierOf">Porteur de </label>
+                <select class="form-control" id="carrierOf" [(ngModel)]="model.carrierOf" name="carrierOf" #carrierOf="ngModel">
+            <option *ngFor="let c of colors" [value]="c.colorId">{{c.name}}</option>
+          </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6 form-group">
+                <label for="father">Père</label>
+                <select class="form-control" id="father" [(ngModel)]="model.fatherRegistrationNumber" name="father" #father="ngModel">
+            <option *ngFor="let sh of sheeps" [value]="sh.registrationNumber">{{sh.name}}</option>
+          </select>
+            </div>
+            <div class="col-12 col-md-6 form-group">
+                <label for="mother">Mère</label>
+                <select class="form-control" id="mother" [(ngModel)]="model.motherRegistrationNumber" name="mother" #mother="ngModel">
+            <option *ngFor="let sh of sheeps" [value]="sh.registrationNumber">{{sh.name}}</option>
+          </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6 form-group">
+                <label for="owner">Propriétaire</label>
+                <select class="form-control" id="owner" [(ngModel)]="model.owner" name="owner" #owner="ngModel">
+            <option *ngFor="let p of persons" [value]="p.personId">{{p.names}}/{{p.breedingName}}</option>
+          </select>
+            </div>
+            <div class="col-12 col-md-6 form-group">
+                <label for="breeder">Eleveur</label>
+                <select class="form-control" id="breeder" [(ngModel)]="model.breeder" name="breeder" #breeder="ngModel">
+                    <option *ngFor="let p of persons" [value]="p.personId">{{p.names}}/{{p.breedingName}}</option>
+          </select>
+            </div>
+        </div>
+        <div class="row justify-content-between">
+            <div class="col-12 col-md-1 form-group">
+                <label for="locusBrown1Id">Locus Brown 1/2</label>
+                <select class="form-control" id="locusBrown1Id" [(ngModel)]="modelGenotype.locusBrown1Id" name="locusBrown1Id" #locusBrown1Id="ngModel">
+            <option *ngFor="let lb of locusBrown" [value]="lb.locusBrownId">{{lb.alleleName}}</option>
+          </select>
+            </div>
+            <div class="col-12 col-md-1 form-group">
+                <label for="locusBrown2Id">Locus Brown 2/2</label>
+                <select class="form-control" id="locusBrown2Id" [(ngModel)]="modelGenotype.locusBrown2Id" name="locusBrown2Id" #locusBrown2Id="ngModel">
+                    <option *ngFor="let lb of locusBrown" [value]="lb.locusBrownId">{{lb.alleleName}}</option>
+          </select>
+            </div>
+            <div class="col-12 col-md-1 form-group">
+                <label for="locusAgouti1Id">Locus Agouti 1/2</label>
+                <select class="form-control" id="locusAgouti1Id" [(ngModel)]="modelGenotype.locusAgouti1Id" name="locusAgouti1Id" #locusAgouti1Id="ngModel">
+            <option *ngFor="let lb of locusAgouti" [value]="lb.locusAgoutiId">{{lb.alleleName}}</option>
+          </select>
+            </div>
+            <div class="col-12 col-md-1 form-group">
+                <label for="locusAgouti2Id">Locus Agouti 2/2</label>
+                <select class="form-control" id="locusAgouti2Id" [(ngModel)]="modelGenotype.locusAgouti2Id" name="locusAgouti2Id" #locusAgouti2Id="ngModel">
+                    <option *ngFor="let lb of locusAgouti" [value]="lb.locusAgoutiId">{{lb.alleleName}}</option>
+          </select>
+            </div>
+            <div class="col-12 col-md-1 form-group">
+                <label for="locusFaded1Id">Locus Faded 1/2</label>
+                <select class="form-control" id="locusFaded1Id" [(ngModel)]="modelGenotype.locusFaded1Id" name="locusFaded1Id" #locusFaded1Id="ngModel">
+            <option *ngFor="let lb of locusFaded" [value]="lb.locusFadedId">{{lb.alleleName}}</option>
+          </select>
+            </div>
+            <div class="col-12 col-md-1 form-group">
+                <label for="locusFaded2Id">Locus Faded 2/2</label>
+                <select class="form-control" id="locusFaded2Id" [(ngModel)]="modelGenotype.locusFaded2Id" name="locusFaded2Id" #locusFaded2Id="ngModel">
+                    <option *ngFor="let lb of locusFaded" [value]="lb.locusFadedId">{{lb.alleleName}}</option>
+          </select>
+            </div>
+            <div class="col-12 col-md-1 form-group">
+                <label for="locusSpotted1Id">Locus Spotted 1/2</label>
+                <select class="form-control" id="locusSpotted1Id" [(ngModel)]="modelGenotype.locusSpotted1Id" name="locusSpotted1Id" #locusSpotted1Id="ngModel">
+            <option *ngFor="let lb of locusSpotted" [value]="lb.locusSpottedId">{{lb.alleleName}}</option>
+          </select>
+            </div>
+            <div class="col-12 col-md-1 form-group">
+                <label for="locusSpotted2Id">Locus Spotted 2/2</label>
+                <select class="form-control" id="locusSpotted2Id" [(ngModel)]="modelGenotype.locusSpotted2Id" name="locusSpotted2Id" #locusSpotted2Id="ngModel">
+                    <option *ngFor="let lb of locusSpotted" [value]="lb.locusSpottedId">{{lb.alleleName}}</option>
+          </select>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary mt-2" [disabled]="!sheepForm.form.valid" (click)="onSubmit()">Ajouter</button>
+    </form>
 </div>
